@@ -1,0 +1,82 @@
+/* ===== Busega SACCO Design Tokens =====
+   Palette strictly: navy-blue, black, army-green, white (used sparingly).
+   Text color: black only (light mode); near-white only for dark-mode text for legibility. */
+
+:root {
+  --navy-950: #050b18;
+  --navy-900: #0a1630;
+  --navy-800: #10203f;
+  --navy-700: #16305a;
+  --navy-600: #1d4076;
+  --navy-500: #2a5694;
+
+  --army-900: #232b1e;
+  --army-700: #3b4a2b;
+  --army-600: #4b5e37;
+  --army-500: #5c7443;
+  --army-400: #74905a;
+
+  --black: #0a0a0a;
+  --white: #ffffff;
+  --off-white: #f4f6f2;
+
+  --surface: var(--white);
+  --surface-alt: var(--off-white);
+  --text: var(--black);
+  --text-muted: #3a3f36;
+  --border: rgba(10, 10, 10, 0.12);
+
+  --brand-gradient: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-700) 55%, var(--army-700) 100%);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --shadow-sm: 0 2px 8px rgba(5, 11, 24, 0.08);
+  --shadow-md: 0 8px 28px rgba(5, 11, 24, 0.14);
+  --shadow-lg: 0 18px 48px rgba(5, 11, 24, 0.22);
+
+  --font-display: 'Sora', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* ---------- Dark theme override ---------- */
+body.theme-dark {
+  --surface: #0d1424;
+  --surface-alt: #101b30;
+  --text: var(--black); /* content copy stays black-on-light cards per brief; chrome inverts below */
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+body.theme-dark .app-shell,
+body.theme-dark .top-header,
+body.theme-dark .menu-panel,
+body.theme-dark .side-note {
+  background: var(--navy-950);
+  color: var(--off-white);
+}
+
+body.theme-dark .card,
+body.theme-dark .panel {
+  background: var(--navy-900);
+  color: var(--off-white);
+  border-color: rgba(255,255,255,0.08);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--surface-alt);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, .display { font-family: var(--font-display); }
+a { color: inherit; }
+button { font-family: var(--font-body); cursor: pointer; }
+::selection { background: var(--army-500); color: var(--white); }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap;
+}

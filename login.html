@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In · Busega Market Leaders &amp; Vendors SACCO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/variables.css">
+<link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+<div class="login-wrap">
+
+  <!-- Left: Brand narrative panel (Image 1 background) -->
+  <section class="brand-panel">
+    <div class="brand-mark">
+      <div class="logo-badge">BM</div>
+      <span>Busega Market Leaders &amp; Vendors SACCO</span>
+    </div>
+    <h1>Grow your savings. Strengthen your market. Build your future.</h1>
+    <p class="tagline">A trusted digital SACCO platform for the traders and vendors of Busega Market — save,
+      borrow, track your growth, and stay connected in real time.</p>
+    <div class="brand-stats">
+      <div><strong>0%</strong><span>Hidden fees</span></div>
+      <div><strong>24/7</strong><span>Account access</span></div>
+      <div><strong>Live</strong><span>Balance updates</span></div>
+    </div>
+  </section>
+
+  <!-- Right: Auth form -->
+  <section class="form-panel">
+    <div class="auth-card">
+      <h2>Welcome back</h2>
+      <p class="sub">Sign in to continue to your SACCO account.</p>
+
+      <div class="role-tabs" role="tablist" aria-label="Choose account type">
+        <button type="button" class="active" data-role="member" role="tab" aria-selected="true">Member</button>
+        <button type="button" data-role="mobiliser" role="tab" aria-selected="false">Mobiliser</button>
+        <button type="button" data-role="admin" role="tab" aria-selected="false">Admin</button>
+      </div>
+
+      <div id="formError" class="form-error"></div>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="field">
+          <label id="idLabel" for="loginId">Member ID</label>
+          <input type="text" id="loginId" name="id" placeholder="e.g. M-0001" required>
+        </div>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <div class="input-wrap">
+            <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
+            <button type="button" class="toggle-visibility" id="togglePw" aria-label="Show password">👁</button>
+          </div>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">Sign In</button>
+      </form>
+      <p class="login-footnote">Busega Market Leaders &amp; Vendors SACCO · Secure member access</p>
+    </div>
+  </section>
+</div>
+
+<script src="../js/login.js"></script>
+</body>
+</html>

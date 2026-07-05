@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Portal · Busega Market Leaders &amp; Vendors SACCO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/variables.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app-shell">
+
+  <header class="top-header">
+    <div class="header-left">
+      <button class="avatar-btn" id="avatarBtn" title="Your profile"><span id="avatarInitial">S</span></button>
+    </div>
+    <div class="header-logo"><div class="badge">BM</div><span>BUSEGA SACCO</span></div>
+    <div class="header-right">
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">☰<span class="notif-dot" id="notifDot"></span></button>
+    </div>
+  </header>
+
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <nav class="menu-panel" id="menuPanel">
+    <div class="menu-panel-header"><h3>Menu</h3><button class="menu-close" id="menuClose">✕</button></div>
+    <div class="menu-section-title">Navigate</div>
+    <button class="menu-item" data-view="overview"><span class="ic">📊</span>Overview</button>
+    <button class="menu-item" data-view="members"><span class="ic">🧾</span>Members Available</button>
+    <button class="menu-item" data-view="loans"><span class="ic">🏦</span>Loans &amp; Requests</button>
+    <button class="menu-item" data-view="profile"><span class="ic">👤</span>Profile Details</button>
+
+    <div class="menu-section-title">Settings</div>
+    <div class="theme-switch-row"><span>Dark Mode</span><button class="switch" id="themeSwitch"></button></div>
+    <button class="menu-item" data-view="security"><span class="ic">🔐</span>Change Password</button>
+    <button class="menu-item" id="logoutBtn"><span class="ic">🚪</span>Log Out</button>
+  </nav>
+
+  <main class="main-content">
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="filter-row" id="overviewPeriodFilter">
+        <button data-period="daily" class="active">Daily</button>
+        <button data-period="weekly">Weekly</button>
+        <button data-period="monthly">Monthly</button>
+        <button data-period="annually">Annually</button>
+      </div>
+      <div class="stat-grid" id="overviewStats"></div>
+      <div class="panel"><h3>Category Breakdown</h3><div class="chart-wrap"><canvas id="overviewChart"></canvas></div></div>
+    </section>
+
+    <!-- MEMBERS -->
+    <section class="view" id="view-members">
+      <div class="panel">
+        <h3>Members Available (Ascending by Member ID)</h3>
+        <table class="data-table">
+          <thead><tr><th>Member ID</th><th>Name</th><th>Balance</th><th>Status</th></tr></thead>
+          <tbody id="membersTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- LOANS -->
+    <section class="view" id="view-loans">
+      <div class="panel">
+        <h3>Loan Requests</h3>
+        <div class="filter-row" id="loanStatusFilter">
+          <button data-status="pending" class="active">Pending</button>
+          <button data-status="approved">Approved</button>
+          <button data-status="disapproved">Disapproved</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Member</th><th>Amount</th><th>Purpose</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="loansTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="view" id="view-profile">
+      <div class="panel">
+        <h3>Profile Details</h3>
+        <div class="form-grid">
+          <div class="field"><label>Full Name</label><input type="text" id="profileName" value="SSEMANDA MIKE"></div>
+          <div class="field"><label>Phone</label><input type="text" id="profilePhone"></div>
+          <div class="field field-full"><label>Email</label><input type="text" id="profileEmail"></div>
+        </div>
+        <button class="btn btn-navy" id="saveProfileBtn" style="margin-top:10px;">Save Changes</button>
+      </div>
+    </section>
+
+    <!-- SECURITY -->
+    <section class="view" id="view-security">
+      <div class="panel">
+        <h3>Change My Password</h3>
+        <p style="font-size:.85rem;color:var(--text-muted);">Note: your Admin ID can only be changed by the mobiliser.</p>
+        <div class="form-grid">
+          <div class="field"><label>Current Password</label><input type="password" id="curPw"></div>
+          <div class="field"><label>New Password</label><input type="password" id="newPw"></div>
+        </div>
+        <button class="btn btn-navy" id="changePwBtn" style="margin-top:10px;">Update Password</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="toastContainer"></div>
+<script src="../js/config.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/socket-client.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobiliser Portal · Busega Market Leaders &amp; Vendors SACCO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/variables.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app-shell">
+
+  <header class="top-header">
+    <div class="header-left">
+      <button class="avatar-btn" id="avatarBtn" title="Your profile"><span id="avatarInitial">K</span></button>
+    </div>
+    <div class="header-logo"><div class="badge">BM</div><span>BUSEGA SACCO</span></div>
+    <div class="header-right">
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">☰<span class="notif-dot" id="notifDot"></span></button>
+    </div>
+  </header>
+
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <nav class="menu-panel" id="menuPanel">
+    <div class="menu-panel-header"><h3>Menu</h3><button class="menu-close" id="menuClose">✕</button></div>
+    <div class="menu-section-title">Navigate</div>
+    <button class="menu-item" data-view="overview"><span class="ic">📊</span>Overview</button>
+    <button class="menu-item" data-view="members"><span class="ic">🧾</span>Members</button>
+    <button class="menu-item" data-view="daily"><span class="ic">💳</span>Daily Transactions</button>
+    <button class="menu-item" data-view="profile"><span class="ic">👤</span>Profile</button>
+
+    <div class="menu-section-title">Settings</div>
+    <div class="theme-switch-row"><span>Dark Mode</span><button class="switch" id="themeSwitch"></button></div>
+    <button class="menu-item" data-view="security"><span class="ic">🔐</span>Change Credentials</button>
+    <button class="menu-item" id="logoutBtn"><span class="ic">🚪</span>Log Out</button>
+  </nav>
+
+  <main class="main-content">
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="filter-row" id="overviewPeriodFilter">
+        <button data-period="daily" class="active">Daily</button>
+        <button data-period="weekly">Weekly</button>
+        <button data-period="monthly">Monthly</button>
+        <button data-period="annually">Annually</button>
+      </div>
+      <div class="stat-grid" id="overviewStats"></div>
+      <div class="panel"><h3>Category Breakdown</h3><div class="chart-wrap"><canvas id="overviewChart"></canvas></div></div>
+    </section>
+
+    <!-- MEMBERS -->
+    <section class="view" id="view-members">
+      <div class="panel">
+        <h3>Add New Member</h3>
+        <div class="form-grid">
+          <div class="field"><label>Full Name</label><input type="text" id="newMemberName" placeholder="e.g. NANTONGO ESTHER"></div>
+          <div class="field"><label>Phone (optional)</label><input type="text" id="newMemberPhone"></div>
+          <div class="field"><label>Email (optional)</label><input type="text" id="newMemberEmail"></div>
+        </div>
+        <button class="btn btn-army" id="addMemberBtn" style="margin-top:10px;">Add Member</button>
+      </div>
+      <div class="panel">
+        <h3>All Members (Ascending by Member ID)</h3>
+        <table class="data-table">
+          <thead><tr><th>Member ID</th><th>Name</th><th>Balance</th><th>Status</th><th>Adjust Balance</th><th></th></tr></thead>
+          <tbody id="membersTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- DAILY TRANSACTIONS -->
+    <section class="view" id="view-daily">
+      <div class="panel">
+        <h3>Transactions</h3>
+        <div class="filter-row" id="dailyCategoryFilter">
+          <button data-category="all" class="active">All</button>
+          <button data-category="deposit">Deposits</button>
+          <button data-category="withdrawal">Withdrawals</button>
+          <button data-category="loan">Loans</button>
+          <button data-category="loan_repayment">Repayments</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Member</th><th>Category</th><th>Amount</th></tr></thead>
+          <tbody id="dailyTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="view" id="view-profile">
+      <div class="panel">
+        <h3>Profile Details</h3>
+        <div class="form-grid">
+          <div class="field"><label>Full Name</label><input type="text" id="profileName" value="KATONGOLE DERRICK"></div>
+          <div class="field"><label>Phone</label><input type="text" id="profilePhone"></div>
+          <div class="field field-full"><label>Email</label><input type="text" id="profileEmail"></div>
+        </div>
+        <button class="btn btn-navy" id="saveProfileBtn" style="margin-top:10px;">Save Changes</button>
+      </div>
+    </section>
+
+    <!-- SECURITY / CHANGE CREDENTIALS -->
+    <section class="view" id="view-security">
+      <div class="panel">
+        <h3>Change My Password</h3>
+        <div class="form-grid">
+          <div class="field"><label>Current Password</label><input type="password" id="curPw"></div>
+          <div class="field"><label>New Password</label><input type="password" id="newPw"></div>
+        </div>
+        <button class="btn btn-navy" id="changePwBtn" style="margin-top:10px;">Update Password</button>
+      </div>
+      <div class="panel">
+        <h3>Change Login IDs</h3>
+        <p style="font-size:.85rem;color:var(--text-muted);">As mobiliser, you can update the login ID used by any role.</p>
+        <div class="form-grid">
+          <div class="field"><label>Role</label>
+            <select id="idRoleSelect"><option value="mobiliser">Mobiliser</option><option value="admin">Admin</option></select>
+          </div>
+          <div class="field"><label>New ID</label><input type="text" id="newIdValue"></div>
+        </div>
+        <button class="btn btn-army" id="changeIdBtn" style="margin-top:10px;">Update ID</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="toastContainer"></div>
+<script src="../js/config.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/socket-client.js"></script>
+<script src="../js/mobiliser.js"></script>
+</body>
+</html>

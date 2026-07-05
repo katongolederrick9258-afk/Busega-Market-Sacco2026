@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: busega-sacco
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 12h
+      - key: CLIENT_ORIGIN
+        value: "*"
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 3306
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        value: busega_sacco
+      - key: DB_SSL
+        value: "true"
+      - key: ADMIN_ID
+        value: ADMIN
+      - key: ADMIN_DEFAULT_PASSWORD
+        sync: false
+      - key: MOBILISER_ID
+        value: MOB-9258-2026
+      - key: MOBILISER_DEFAULT_PASSWORD
+        sync: false
+      - key: MEMBER_DEFAULT_PASSWORD
+        value: member123
